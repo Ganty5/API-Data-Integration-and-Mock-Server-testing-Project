@@ -1,0 +1,940 @@
+{
+	"info": {
+		"_postman_id": "4c282eee-ecd7-4a55-8fc8-7c0fa32f3785",
+		"name": "API practice Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40437294"
+	},
+	"item": [
+		{
+			"name": "Get all Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json(); // Parse JSON response\r",
+							"let titles = response.map(post => post.title); // Extract all titles\r",
+							"\r",
+							"// Log all titles to the Postman Console\r",
+							"console.log('Post Titles:', titles);\r",
+							"\r",
+							"// Verify the number of posts retrieved\r",
+							"pm.test(\"Verify number of posts\", function () {\r",
+							"    pm.expect(response.length).to.equal(100); // JSONPlaceholder returns 100 posts by default\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"console.log('Created Post:', response);\r",
+							"\r",
+							"pm.test(\"Verify post creation\", function () {\r",
+							"    pm.expect(response).to.have.property('Id');\r",
+							"    pm.expect(response.title).to.equal('My New Post');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"My New Post\",\r\n    \"body\": \"This is the content of my new post.\",\r\n    \"userId\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}",
+					"host": [
+						"{{baseurl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"console.log('Updated Post:', response);\r",
+							"\r",
+							"pm.test ('Verify post update', function () {\r",
+							"    pm.expect(response.title).to.equal(\"Updated Post Title\");\r",
+							"    pm.expect(response.body).to.equal(\"Updated content for the post.\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify post deletion\", function (){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve a specific userId e.g 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify post deletion\", function (){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}?id=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching first 5 post from the data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify post deletion\", function (){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}?_start=0&_limit=5",
+					"host": [
+						"{{baseurl}}"
+					],
+					"query": [
+						{
+							"key": "_start",
+							"value": "0"
+						},
+						{
+							"key": "_limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Aggregating data for insights",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let posts = pm.response.json();\r",
+							"let userpostcounts = {};\r",
+							"\r",
+							"// we will want it to loop through all posts and count how many times each userid appeared (Aggregate it)\r",
+							"posts.forEach(post => {\r",
+							"    if (userpostcounts[post.userId]) {\r",
+							"        userpostcounts[post.userId]++;\r",
+							"    }else {\r",
+							"        userpostcounts[post.userId] = 1;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"console.log(\"Post counts per user:\", userpostcounts);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}",
+					"host": [
+						"{{baseurl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Data Validation and error checks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// checking for missing fields (validation)\r",
+							"\r",
+							"let posts = pm.response.json();\r",
+							"let missingfields = [];\r",
+							"\r",
+							"posts.forEach((post, index) => {\r",
+							"    let missing = [];\r",
+							"    if (!post.userId) missing.push('userId');\r",
+							"    if (!post.Id) missing.push('Id');\r",
+							"    if (!post.title) missing.push('title');\r",
+							"    if (!post.body) missing.push('body');\r",
+							"\r",
+							"    if (missing.length >0) {\r",
+							"        missingfields.push({ index: index + 1, missing});\r",
+							"    }\r",
+							"})\r",
+							"\r",
+							"if (missingfields.length > 0) {\r",
+							"    console.log(\"Post with missing fields:\", missingfields);\r",
+							"}else {\r",
+							"    console.log(\"All post are valid and have required fields:\");\r",
+							"}\r",
+							"\r",
+							"\r",
+							"// checking for errors\r",
+							"pm.test (\"verify response is an array\", function() {\r",
+							"    pm.expect(Array.isArray(pm.response.json())).to.be.true;\r",
+							"});\r",
+							"\r",
+							"//using numeric comparison for response code\r",
+							"if (pm.response.code !== 200) {\r",
+							"    console.log(\"Error exist:\", pm.response.code);\r",
+							"}else {\r",
+							"    console.log(\"Response is OK:\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}",
+					"host": [
+						"{{baseurl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transforming data to make a summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify post deletion\", function (){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}?id=100",
+					"host": [
+						"{{baseurl}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Shipment list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let shipments = pm.response.json();\r",
+							"if (shipments.length > 0) {\r",
+							"    //saving the first shipment id as an environment variable\r",
+							"    pm.environment.set(\"shipmentId\", shipments[0].id);\r",
+							"    console.log(\"Shipment ID saved\", shipments[0].id);\r",
+							"} else {\r",
+							"    console.log(\"No shipment found\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}",
+					"host": [
+						"{{baseurl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve shipment Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify post deletion\", function (){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated Post Title\",\r\n    \"body:\": \"Updated Content for the post\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}",
+					"host": [
+						"{{baseurl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updating Shipment Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"pm.test(\"Verify shipment status updated\", function () {\r",
+							"    pm.expect(response.status).to.eql(\"delivered\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7QAzXZ3FSr1dnBxuE1S06cCBmSCJZf",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"delivered\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/{{shipmentid}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"{{shipmentid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shipmentlists",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://98e849b2-816e-48d1-9dfc-16ba92b432f4.mock.pstmn.io/shipments",
+					"protocol": "https",
+					"host": [
+						"98e849b2-816e-48d1-9dfc-16ba92b432f4",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"shipments"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "shipments",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://98e849b2-816e-48d1-9dfc-16ba92b432f4.mock.pstmn.io/shipments",
+							"protocol": "https",
+							"host": [
+								"98e849b2-816e-48d1-9dfc-16ba92b432f4",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"shipments"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 26 Jan 2025 14:13:04 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=15be0f81a74d89f0"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=c725460997515d3f"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "119"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1737900843"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"17b7-DTs8STO4rTe17iIwgruKJ7necOg\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "[\r\n  {\r\n    \"shipmentId\": \"SHP001\",\r\n    \"origin\": \"Paris\",\r\n    \"destination\": \"London\",\r\n    \"status\": \"$randomin transit\",\r\n    \"gps\": {\r\n      \"latitude\": 48.8566,\r\n      \"longitude\": 2.3522\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP002\",\r\n    \"origin\": \"Berlin\",\r\n    \"destination\": \"Amsterdam\",\r\n    \"status\": \"$randomdelivered\",\r\n    \"gps\": {\r\n      \"latitude\": 52.5200,\r\n      \"longitude\": 13.4050\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP003\",\r\n    \"origin\": \"Madrid\",\r\n    \"destination\": \"Lisbon\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 40.4168,\r\n      \"longitude\": -3.7038\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP004\",\r\n    \"origin\": \"Rome\",\r\n    \"destination\": \"Milan\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 41.9028,\r\n      \"longitude\": 12.4964\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP005\",\r\n    \"origin\": \"Vienna\",\r\n    \"destination\": \"Prague\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 48.2082,\r\n      \"longitude\": 16.3738\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP006\",\r\n    \"origin\": \"Dublin\",\r\n    \"destination\": \"Belfast\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 53.3498,\r\n      \"longitude\": -6.2603\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP007\",\r\n    \"origin\": \"Oslo\",\r\n    \"destination\": \"Stockholm\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 59.9139,\r\n      \"longitude\": 10.7522\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP008\",\r\n    \"origin\": \"Copenhagen\",\r\n    \"destination\": \"Hamburg\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 55.6761,\r\n      \"longitude\": 12.5683\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP009\",\r\n    \"origin\": \"Warsaw\",\r\n    \"destination\": \"Krakow\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 52.2297,\r\n      \"longitude\": 21.0122\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP010\",\r\n    \"origin\": \"Brussels\",\r\n    \"destination\": \"Antwerp\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 50.8503,\r\n      \"longitude\": 4.3517\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP011\",\r\n    \"origin\": \"Edinburgh\",\r\n    \"destination\": \"Glasgow\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 55.9533,\r\n      \"longitude\": -3.1883\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP012\",\r\n    \"origin\": \"Helsinki\",\r\n    \"destination\": \"Tallinn\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 60.1695,\r\n      \"longitude\": 24.9354\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP013\",\r\n    \"origin\": \"Athens\",\r\n    \"destination\": \"Thessaloniki\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 37.9838,\r\n      \"longitude\": 23.7275\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP014\",\r\n    \"origin\": \"Zurich\",\r\n    \"destination\": \"Geneva\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 47.3769,\r\n      \"longitude\": 8.5417\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP015\",\r\n    \"origin\": \"Lisbon\",\r\n    \"destination\": \"Porto\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 38.7169,\r\n      \"longitude\": -9.139\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP016\",\r\n    \"origin\": \"Seville\",\r\n    \"destination\": \"Malaga\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 37.3891,\r\n      \"longitude\": -5.9845\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP017\",\r\n    \"origin\": \"Budapest\",\r\n    \"destination\": \"Bratislava\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 47.4979,\r\n      \"longitude\": 19.0402\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP018\",\r\n    \"origin\": \"Zagreb\",\r\n    \"destination\": \"Split\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 45.8150,\r\n      \"longitude\": 15.9819\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP019\",\r\n    \"origin\": \"Sofia\",\r\n    \"destination\": \"Varna\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 42.6977,\r\n      \"longitude\": 23.3219\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP020\",\r\n    \"origin\": \"Belgrade\",\r\n    \"destination\": \"Novi Sad\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 44.8176,\r\n      \"longitude\": 20.4569\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP021\",\r\n    \"origin\": \"Istanbul\",\r\n    \"destination\": \"Ankara\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 41.0082,\r\n      \"longitude\": 28.9784\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP022\",\r\n    \"origin\": \"Moscow\",\r\n    \"destination\": \"Saint Petersburg\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 55.7558,\r\n      \"longitude\": 37.6173\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP023\",\r\n    \"origin\": \"Stockholm\",\r\n    \"destination\": \"Helsingborg\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 59.3293,\r\n      \"longitude\": 18.0686\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP024\",\r\n    \"origin\": \"Reykjavik\",\r\n    \"destination\": \"Akureyri\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 64.1355,\r\n      \"longitude\": -21.8954\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP025\",\r\n    \"origin\": \"Tirana\",\r\n    \"destination\": \"Durres\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 41.3275,\r\n      \"longitude\": 19.8189\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP026\",\r\n    \"origin\": \"Podgorica\",\r\n    \"destination\": \"Budva\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 42.4410,\r\n      \"longitude\": 19.2620\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP027\",\r\n    \"origin\": \"Vilnius\",\r\n    \"destination\": \"Kaunas\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 54.6872,\r\n      \"longitude\": 25.2797\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP028\",\r\n    \"origin\": \"Riga\",\r\n    \"destination\": \"Daugavpils\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 56.9496,\r\n      \"longitude\": 24.1052\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP029\",\r\n    \"origin\": \"Tallinn\",\r\n    \"destination\": \"Tartu\",\r\n    \"status\": \"pending\",\r\n    \"gps\": {\r\n      \"latitude\": 59.4370,\r\n      \"longitude\": 24.7536\r\n    }\r\n  },\r\n  {\r\n    \"shipmentId\": \"SHP030\",\r\n    \"origin\": \"Brno\",\r\n    \"destination\": \"Ostrava\",\r\n    \"status\": \"in transit\",\r\n    \"gps\": {\r\n      \"latitude\": 49.1951,\r\n      \"longitude\": 16.6068\r\n    }\r\n  }\r\n]\r\n"
+				},
+				{
+					"name": "SHP001",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/getUsers",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"getUsers"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"shipmentId\": \"SHP001\",\r\n    \"origin\": \"Paris\",\r\n    \"destination\": \"London\",\r\n    \"status\": \"$randomin transit\",\r\n    \"gps\": {\r\n      \"latitude\": 48.8566,\r\n      \"longitude\": 2.3522\r\n    }\r\n}"
+				},
+				{
+					"name": "SHP002",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/getUsers2",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"getUsers2"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n\"shipmentId\": \"SHP002\",\r\n\"origin\": \"Berlin\",\r\n\"destination\": \"Amsterdam\",\r\n\"status\": \"$randomdelivered\",\r\n\"gps\": {\r\n\"latitude\": 52.5200,\r\n\"longitude\": 13.4050\r\n}\r\n}"
+				},
+				{
+					"name": "SHP006",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/getUsers6",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"getUsers6"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"shipmentId\": \"SHP006\",\r\n    \"origin\": \"Dublin\",\r\n    \"destination\": \"Belfast\",\r\n    \"status\": \"delivered\",\r\n    \"gps\": {\r\n      \"latitude\": 53.3498,\r\n      \"longitude\": -6.2603\r\n    }\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Fetch shipmentID = 1",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://98e849b2-816e-48d1-9dfc-16ba92b432f4.mock.pstmn.io/getUsers",
+					"protocol": "https",
+					"host": [
+						"98e849b2-816e-48d1-9dfc-16ba92b432f4",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"getUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch shipmentid =2",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://98e849b2-816e-48d1-9dfc-16ba92b432f4.mock.pstmn.io/getUsers2",
+					"protocol": "https",
+					"host": [
+						"98e849b2-816e-48d1-9dfc-16ba92b432f4",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"getUsers2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch shipmentId = 6",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://98e849b2-816e-48d1-9dfc-16ba92b432f4.mock.pstmn.io/getUsers6",
+					"protocol": "https",
+					"host": [
+						"98e849b2-816e-48d1-9dfc-16ba92b432f4",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"getUsers6"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "https://jsonplaceholder.typicode.com/posts",
+			"type": "string"
+		},
+		{
+			"key": "shipmentid",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "mockserver",
+			"value": "https://ad4afba3-6597-40a4-aedb-2a1bc207551c.mock.pstmn.io",
+			"type": "string"
+		}
+	]
+}
