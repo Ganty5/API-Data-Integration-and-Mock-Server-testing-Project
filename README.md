@@ -1,6 +1,7 @@
-**API Data Integration & Mock Server Testing Project **
+**API Data Integration & Mock Server Testing Project**
 
 Author: Chidinma UKANDU
+
 Tools Used: Postman, JSONPlaceholder, Mock Server, JSON Formatter
 
 📖 Overview
