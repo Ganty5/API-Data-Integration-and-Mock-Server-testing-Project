@@ -4,6 +4,8 @@ Author: Chidinma UKANDU
 
 Tools Used: Postman, JSONPlaceholder, Mock Server, JSON Formatter
 
+
+
 📖 Overview
 This project is a hands-on learning journey into APIs—how they work, how to test them, and how to simulate API responses using a mock server.
 
